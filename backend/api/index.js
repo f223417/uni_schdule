@@ -6,7 +6,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Our timetable now includes multiple weeks and a holiday announcement
 let timetable = {
   weeks: {
     week1: {
@@ -53,16 +52,16 @@ let timetable = {
   }
 };
 
-// Route to get the timetable data
 app.get("/api/timetable", (req, res) => {
   res.json(timetable);
 });
 
-// Route to update the timetable data (including holiday info)
 app.post("/api/timetable", (req, res) => {
   timetable = req.body;
   res.json({ message: "Timetable updated successfully!" });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = app;
+module.exports.handler = (req, res) => {
+  app(req, res);
+};
